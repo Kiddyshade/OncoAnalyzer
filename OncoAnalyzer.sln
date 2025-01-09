@@ -1,10 +1,8 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OncoAnalyzer", "OncoAnalyzer\OncoAnalyzer.csproj", "{7ACD2D79-76B9-48DE-A950-79650AABCDC4}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OncoAnalyzer.Tests", "OncoAnalyzer.Tests\OncoAnalyzer.Tests.csproj", "{3D28E0E0-24E8-4154-8DEC-D3C71519A377}"
 EndProject
 Global
