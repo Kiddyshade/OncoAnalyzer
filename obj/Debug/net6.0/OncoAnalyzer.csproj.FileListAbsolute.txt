@@ -1,0 +1,14 @@
+E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\bin\Debug\net6.0\OncoAnalyzer.exe
+E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\bin\Debug\net6.0\OncoAnalyzer.deps.json
+E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\bin\Debug\net6.0\OncoAnalyzer.runtimeconfig.json
+E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\bin\Debug\net6.0\OncoAnalyzer.dll
+E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\bin\Debug\net6.0\OncoAnalyzer.pdb
+E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\obj\Debug\net6.0\OncoAnalyzer.GeneratedMSBuildEditorConfig.editorconfig
+E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\obj\Debug\net6.0\OncoAnalyzer.AssemblyInfoInputs.cache
+E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\obj\Debug\net6.0\OncoAnalyzer.AssemblyInfo.cs
+E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\obj\Debug\net6.0\OncoAnalyzer.csproj.CoreCompileInputs.cache
+E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\obj\Debug\net6.0\OncoAnalyzer.dll
+E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\obj\Debug\net6.0\refint\OncoAnalyzer.dll
+E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\obj\Debug\net6.0\OncoAnalyzer.pdb
+E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\obj\Debug\net6.0\OncoAnalyzer.genruntimeconfig.cache
+E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\obj\Debug\net6.0\ref\OncoAnalyzer.dll
