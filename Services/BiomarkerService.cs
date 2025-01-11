@@ -13,17 +13,34 @@ namespace OncoAnalyzer.Services
 
         public void RecordTest()
         {
-            // 1. Accept Patient ID
+            // 1. Accept Patient ID and validate
             Console.Write("Enter Patient ID: ");
-            var patientId = int.Parse(Console.ReadLine() ?? "0");
+            if (!int.TryParse(Console.ReadLine(), out int patientId) || patientId<=0)
+            {
+                Console.WriteLine("Invalid Patient ID. Please enter a valid ID.");
+                return;
+            }
 
-            // 2. Accept Biomarker Data
+            // 2. Validate and Accept Biomarker Data 
             Console.Write("Enter Biomarker Name (e.g., PSA): ");
             var biomarkerName = Console.ReadLine();
             Console.Write("Enter Test Value: ");
-            var value = double.Parse(Console.ReadLine() ?? "0");
+            if (string.IsNullOrWhiteSpace(biomarkerName))
+            {
+                Console.WriteLine("Biomarker name cannot be empty.");
+                return;
+            }
 
-            // 3. Record in dictionary
+            // **Validate biomarker value**
+            double value;
+            Console.Write("Enter Test Value (positive number required): ");
+            if (!double.TryParse(Console.ReadLine(),out value) || value<0)
+            {
+                Console.WriteLine("Invalid biomarker value. Please enter a positive number.");
+                return;
+            }
+
+            // 3. Add biomarker record to dictionary
             if (!biomarkerRecords.ContainsKey(patientId))
                 biomarkerRecords[patientId] = new List<Biomarker>();
 

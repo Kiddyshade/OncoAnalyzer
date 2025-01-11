@@ -13,15 +13,46 @@ namespace OncoAnalyzer.Services
 
         public void AddPatient()
         {
-            // 1. Accept patient details
-            Console.Write("Enter Patient Name: ");
-            var name = Console.ReadLine();
-            Console.WriteLine("Enter Age: ");
-            var age = int.Parse(Console.ReadLine() ?? "0");
-            Console.Write("Enter Diagnosis (e.g., Lung Cancer): ");
-            var diagnosis = Console.ReadLine();
+            // 0.1 Updated in Patientservice.cs
+            string name;
+            do
+            {
+                // 1. Accept patient details
+                Console.Write("Enter Patient Name: ");
+                name = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    Console.WriteLine("Patient name cannot be empty. Please try again.");
+                }
+            } while (string.IsNullOrWhiteSpace(name));
 
-            // 2. Add to patient list
+            int age;
+
+            do
+            {
+                Console.WriteLine("Enter Age: ");
+
+                var ageInput = Console.ReadLine();
+                if (!int.TryParse(ageInput,out age) || age<=0)
+                {
+                    Console.WriteLine("Invalid age. Please enter a positive integer.");
+                }
+
+            } while (age<=0);
+
+            string diagnosis;
+
+            do
+            {
+                Console.Write("Enter Diagnosis (required!) (e.g., Lung Cancer): ");
+                diagnosis = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(diagnosis))
+                {
+                    Console.WriteLine("Diagnosis cannot be empty. Please try again.");
+                }
+            } while (string.IsNullOrWhiteSpace(diagnosis));
+           
+            // 2. Add the validated patient details to the list
             var patient = new Patient
             {
                 Id = patients.Count + 1,
@@ -85,6 +116,24 @@ namespace OncoAnalyzer.Services
             Console.WriteLine($"Name: {patient.Name}");
             Console.WriteLine($"Age: {patient.Age}");
             Console.WriteLine($"Diagnosis: {patient.Diagnosis}");
+        }
+
+        // View all patients
+        public void ViewAllPatients()
+        {
+            Console.WriteLine("\nList of All Patients: ");
+            if( !patients.Any() ) 
+            {
+                Console.WriteLine("No patients found.");
+                return;
+            }
+
+            foreach(var patient in patients)
+            {
+                Console.WriteLine($" ID: {patient.Id}, Name: {patient.Name}, Age: {patient.Age}, Diagnosis: {patient.Diagnosis}");
+
+            }
+
         }
     }
 
