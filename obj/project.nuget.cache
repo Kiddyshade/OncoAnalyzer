@@ -1,8 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "oyUH2T70FEEvcC7Miw2dki/CvzUwpGfH5sFXIOvfYR4ZAxts3nOqS38buyQynH9Dz9LJWUcXoN0Az9/aRW/dXg==",
+  "dgSpecHash": "ijhVV68bvt06vgBCJM70kk1g8i0ZK87KSXjJ2gppHOmScJXfmXzaj2T+R+RbkGQDxoi0DD0MBU7g3YH8w9EsbA==",
   "success": true,
   "projectFilePath": "E:\\Development\\Language\\C#\\OncoAnalyzer\\OncoAnalyzer\\OncoAnalyzer.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\ADMIN\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\ADMIN\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\ADMIN\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\ADMIN\\.nuget\\packages\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\ADMIN\\.nuget\\packages\\system.data.sqlclient\\4.9.0\\system.data.sqlclient.4.9.0.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using OncoAnalyzer.Models;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,11 @@ namespace OncoAnalyzer.Services
     public class BiomarkerService
     {
         private Dictionary<int, List<Biomarker>> biomarkerRecords = new Dictionary<int, List<Biomarker>>();
-
+        private DatabaseService databaseService;
+        public BiomarkerService(DatabaseService dbService)
+        {
+            databaseService = dbService;
+        }
         public void RecordTest()
         {
             // 1. Accept Patient ID and validate
@@ -40,18 +45,23 @@ namespace OncoAnalyzer.Services
                 return;
             }
 
-            // 3. Add biomarker record to dictionary
-            if (!biomarkerRecords.ContainsKey(patientId))
-                biomarkerRecords[patientId] = new List<Biomarker>();
-
-            biomarkerRecords[patientId].Add(new Biomarker
+            // Code: Save Biomarker Test to Database
+            using (var connection = databaseService.GetConnection())
             {
-                Name = biomarkerName,
-                Value = value,
-                TestDate = DateTime.Now,
-            });
+                connection.Open();
 
-            Console.WriteLine($"Recorded biomarker '{biomarkerName}' for patient ID {patientId}.");
+                string insertTest = @"INSERT INTO BiomarkerResults (BiomarkerName, Value, TestDate, PatientId) VALUES (@BiomarkerName, @Value, @TestDate, @PatientId);";
+                using (var command = new SqlCommand(insertTest, connection))
+                {
+                    command.Parameters.AddWithValue("@BiomarkerName", biomarkerName);
+                    command.Parameters.AddWithValue("@Value", value);
+                    command.Parameters.AddWithValue("@TestDate", DateTime.Now);
+                    command.Parameters.AddWithValue("@PatientId", patientId);
+
+                    command.ExecuteNonQuery();
+                    Console.WriteLine($"Biomarker test '{biomarkerName}' recorded for Patient ID {patientId}.");
+                }
+            }
 
         }
 

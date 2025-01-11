@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using OncoAnalyzer.Models;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,13 @@ namespace OncoAnalyzer.Services
     public class PatientService
     {
         private List<Patient> patients = new List<Patient>(); // In-memory storage
+
+        private DatabaseService databaseService;
+
+        public PatientService(DatabaseService dbService)
+        {
+            databaseService = dbService;
+        }
 
         public void AddPatient()
         {
@@ -51,19 +59,52 @@ namespace OncoAnalyzer.Services
                     Console.WriteLine("Diagnosis cannot be empty. Please try again.");
                 }
             } while (string.IsNullOrWhiteSpace(diagnosis));
-           
-            // 2. Add the validated patient details to the list
-            var patient = new Patient
+
+            // Insert patient details into the database
+            using (var connection = databaseService.GetConnection())
             {
-                Id = patients.Count + 1,
-                Name = name,
-                Age = age,
-                Diagnosis = diagnosis
-            };
+                connection.Open();
 
-            patients.Add(patient);
-            Console.WriteLine($"Patient '{name}' added successfully with ID {patient.Id}. ");
+                string insertPatient = @"INSERT INTO Patients (Name, Age, Diagnosis) VALUES (@Name, @Age, @Diagnosis);";
 
+                using (var command = new SqlCommand(insertPatient, connection))
+                {
+                    command.Parameters.AddWithValue("@Name", name);
+                    command.Parameters.AddWithValue("@Age", age);
+                    command.Parameters.AddWithValue("@Diagnosis", diagnosis);
+
+                    command.ExecuteNonQuery();
+                    Console.WriteLine($"Patient '{name}' added successfully.");
+                }
+            } 
+
+        }
+
+        // View all patients
+        public void ViewAllPatients()
+        {
+            Console.WriteLine("\nList of All Patients: ");
+
+            using (var connection = databaseService.GetConnection())
+            {
+                connection.Open();
+                string query = "SELECT * FROM Patients;";
+                using (var command = new SqlCommand(query, connection))
+                {
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (!reader.HasRows)
+                        {
+                            Console.WriteLine("No patients found.");
+                            return;
+                        }
+                        while (reader.Read()) 
+                        {
+                            Console.WriteLine($"ID: {reader["Id"]}, Name: {reader["Name"]}, Age: {reader["Age"]}, Diagnosis: {reader["Diagnosis"]}");
+                        }
+                    }
+                }
+            }           
         }
 
         public void SearchPatient()
@@ -118,23 +159,7 @@ namespace OncoAnalyzer.Services
             Console.WriteLine($"Diagnosis: {patient.Diagnosis}");
         }
 
-        // View all patients
-        public void ViewAllPatients()
-        {
-            Console.WriteLine("\nList of All Patients: ");
-            if( !patients.Any() ) 
-            {
-                Console.WriteLine("No patients found.");
-                return;
-            }
-
-            foreach(var patient in patients)
-            {
-                Console.WriteLine($" ID: {patient.Id}, Name: {patient.Name}, Age: {patient.Age}, Diagnosis: {patient.Diagnosis}");
-
-            }
-
-        }
+        
     }
 
    
