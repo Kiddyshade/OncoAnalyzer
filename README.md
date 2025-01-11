@@ -44,3 +44,55 @@ The following improvements have been made to the project:
 4. Search for a Patient
 5. View All Patients
 6. Exit
+
+--------------------------------------------------------------------------------------
+
+# OncoAnalyzer - Enhancement SQL Server integration and store data in database
+
+## Overview
+OncoAnalyzer is a C# console application designed to simulate an Oncology-focused system for managing patient data and biomarker test results. Now enhanced with **MS SQL Server** integration for persistent data storage.
+
+## Features
+1. Add patient details.
+2. Record biomarker test results.
+3. View all patients and their details.
+4. Data persistence using MS SQL Server.
+
+## Setup Instructions
+### Prerequisites
+1. **MS SQL Server** installed on your machine.
+2. **Visual Studio** with the .NET development workload installed.
+
+### Database Setup
+1. Create a new database `OncoAnalyzerDB` using the SQL script:
+    ```sql
+    CREATE DATABASE OncoAnalyzerDB;
+    USE OncoAnalyzerDB;
+    CREATE TABLE Patients (
+        Id INT IDENTITY(1,1) PRIMARY KEY,
+        Name NVARCHAR(100) NOT NULL,
+        Age INT NOT NULL,
+        Diagnosis NVARCHAR(200) NOT NULL
+    );
+    CREATE TABLE BiomarkerResults (
+        Id INT IDENTITY(1,1) PRIMARY KEY,
+        BiomarkerName NVARCHAR(100) NOT NULL,
+        Value FLOAT NOT NULL,
+        TestDate DATETIME NOT NULL,
+        PatientId INT NOT NULL FOREIGN KEY REFERENCES Patients(Id)
+    );
+    ```
+2. Update the `DatabaseService.cs` connection string with your SQL Server instance details.
+
+### Running the Application
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/<YourGitHubUsername>/OncoAnalyzer.git
+    ```
+2. Open the solution in **Visual Studio**.
+3. Run the application using `Ctrl + F5`.
+
+## Testing the Application
+- Add patients to the database.
+- Record biomarker test results for a patient.
+- View all patients and their details.
