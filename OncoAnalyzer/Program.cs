@@ -9,8 +9,13 @@ namespace OncoAnalyzer
         {
             //1. Entry point of the program
             Console.WriteLine("Welcome to OncoAnalyzer - Oncology Data Tracker");
-            var patientService = new PatientService(); // Initialize Service
-            var biomarkerService = new BiomarkerService(); // Initialize service
+
+            // Use DbExecutor (which implements IDbExecutor) and pass the connection string
+            var dbExecutor = new DbExecutor("Server=DESKTOP-GDT78B8\\SQLEXPRESS;Database=OncoAnalyzerDB;Trusted_Connection=True;");
+
+            //var databaseService = new DatabaseService();
+            var patientService = new PatientService(dbExecutor); // Initialize Service
+            var biomarkerService = new BiomarkerService(dbExecutor); // Initialize service
 
             while (true)
             {
@@ -18,7 +23,7 @@ namespace OncoAnalyzer
                 Console.WriteLine("\nMain Menu");
                 Console.WriteLine("1. Add Patient Details");
                 Console.WriteLine("2. Record Biomarker Test Results");
-                Console.WriteLine("3. Generate Patient Report");
+                Console.WriteLine("3. View all Patients");
                 Console.WriteLine("4. Exit");
                 Console.WriteLine("Select an option: ");
 
@@ -31,14 +36,15 @@ namespace OncoAnalyzer
                         patientService.AddPatient();
                     break;
                      case "2":
-                     biomarkerService.RecordTest();
+                       biomarkerService.RecordTest();
                      break;
                      case "3":
-                     biomarkerService.GenerateReport();
-                     break;
+                        patientService.ViewAllPatients(); // view all patient from database functionality
+                        break;
                      case "4":
-                     Console.WriteLine("Exiting application. Goodbye!");
-                     break;
+                        Console.WriteLine("Exiting application. Goodbye!");
+                        break;
+                   
                     default: Console.WriteLine("Invalid option. Please try again.");
                         break;
                 }
