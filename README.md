@@ -96,3 +96,57 @@ OncoAnalyzer is a C# console application designed to simulate an Oncology-focuse
 - Add patients to the database.
 - Record biomarker test results for a patient.
 - View all patients and their details.
+------------------------------------------------------------------------------
+ ## 14/01/2024 - Update
+------------------------------------------------------------------------------s
+ # OncoAnalyzer - Oncology Data Tracker
+
+OncoAnalyzer is a C# console application designed for tracking patient data and biomarker test results in an oncology-focused environment. This project showcases features like patient management, biomarker tracking, unit testing with mock services, and database integration using **MS SQL Server**.
+
+This project also demonstrates the use of **interactive rebasing**, **mock testing** with **Moq**, and an organized service-oriented architecture—all key components for modern .NET application development.
+
+---
+
+## Features
+
+1. **Patient Management**
+   - Add new patients (name, age, diagnosis).
+   - View all patients stored in the database.
+
+2. **Biomarker Test Tracking**
+   - Record biomarker test results (e.g., PSA levels) for patients.
+   - Store and associate biomarker data with corresponding patient IDs.
+
+3. **Unit Testing**
+   - Comprehensive tests for `PatientService` and `BiomarkerService` using **xUnit** and **Moq**.
+   - Mock dependencies with `IDbExecutor` for better isolation and testability.
+
+4. **Database Integration**
+   - Persistent data storage with **Microsoft SQL Server**.
+   - `IDbExecutor` for database abstraction, allowing flexibility in executing SQL commands.
+
+5. **Project Setup**
+   - Organized project structure separating services, models, and tests.
+   - A clean and extensible architecture for future scalability.
+
+---
+
+## Technologies Used
+
+- **C#** (.NET 6.0)
+- **Microsoft SQL Server** (for database storage)
+- **xUnit** (for unit testing)
+- **Moq** (for mocking services in unit tests)
+- **Visual Studio 2022**
+
+---
+
+## How to Set Up the Project
+
+### Prerequisites
+
+1. Install **Visual Studio 2022** with the `.NET Desktop Development` workload.
+2. Install **MS SQL Server** and **SQL Server Management Studio (SSMS)**.
+3. Clone this repository:
+   ```bash
+   git clone https://github.com/Kiddyshade/OncoAnalyzer.git
