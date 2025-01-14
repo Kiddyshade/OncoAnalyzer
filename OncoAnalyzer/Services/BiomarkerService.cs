@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using OncoAnalyzer.Models;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Serilog;
+
 
 namespace OncoAnalyzer.Services
 {
@@ -27,37 +26,50 @@ namespace OncoAnalyzer.Services
 
         public void RecordTest()
         {
-            // 1. Accept Patient ID and validate
-            Console.Write("Enter Patient ID: ");
-            if (!int.TryParse(Console.ReadLine(), out int patientId) || patientId<=0)
+
+            try
             {
-                Console.WriteLine("Invalid Patient ID. Please enter a valid ID.");
-                return;
-            }
+                // 1. Accept Patient ID and validate
+                Console.Write("Enter Patient ID: ");
+                if (!int.TryParse(Console.ReadLine(), out int patientId) || patientId <= 0)
+                {
+                    Console.WriteLine("Invalid Patient ID. Please enter a valid ID.");
+                    return;
+                }
 
-            // 2. Validate and Accept Biomarker Data 
-            Console.Write("Enter Biomarker Name (e.g., PSA): ");
-            var biomarkerName = Console.ReadLine();
-            Console.Write("Enter Test Value: ");
-            if (string.IsNullOrWhiteSpace(biomarkerName))
+                // 2. Validate and Accept Biomarker Data 
+                Console.Write("Enter Biomarker Name (e.g., PSA): ");
+                var biomarkerName = Console.ReadLine();
+                Console.Write("Enter Test Value: ");
+                if (string.IsNullOrWhiteSpace(biomarkerName))
+                {
+                    Console.WriteLine("Biomarker name cannot be empty.");
+                    return;
+                }
+
+                // **Validate biomarker value**
+                double value;
+                Console.Write("Enter Test Value (positive number required): ");
+                if (!double.TryParse(Console.ReadLine(), out value) || value < 0)
+                {
+                    Console.WriteLine("Invalid biomarker value. Please enter a positive number.");
+                    return;
+                }
+
+
+                // Call the overloaded method with the gathered input - for unit testing purpose
+                RecordTest(biomarkerName, value, DateTime.Now, patientId);
+
+                // Logging information 
+                Log.Information("Biomarker test '{Biomarker}' recorded for Patient ID {PatientId} with" +
+                    "value {Value}.", biomarkerName, patientId, value);
+            }
+            catch (Exception ex)
             {
-                Console.WriteLine("Biomarker name cannot be empty.");
-                return;
+                Log.Error(ex, "Failed to record biomarker test.");
+                Console.WriteLine("ERROR: Could not record biomarker test. Please try again.");
+
             }
-
-            // **Validate biomarker value**
-            double value;
-            Console.Write("Enter Test Value (positive number required): ");
-            if (!double.TryParse(Console.ReadLine(),out value) || value<0)
-            {
-                Console.WriteLine("Invalid biomarker value. Please enter a positive number.");
-                return;
-            }
-
-
-            // Call the overloaded method with the gathered input - for unit testing purpose
-            RecordTest(biomarkerName, value, DateTime.Now, patientId);
-       
 
         }
 

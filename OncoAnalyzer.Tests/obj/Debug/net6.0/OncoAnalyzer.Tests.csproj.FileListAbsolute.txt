@@ -112,3 +112,6 @@ E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer.Tests\obj\Debug\net6.0\refi
 E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer.Tests\obj\Debug\net6.0\OncoAnalyzer.Tests.pdb
 E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer.Tests\obj\Debug\net6.0\OncoAnalyzer.Tests.genruntimeconfig.cache
 E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer.Tests\obj\Debug\net6.0\ref\OncoAnalyzer.Tests.dll
+E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer.Tests\bin\Debug\net6.0\Serilog.dll
+E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer.Tests\bin\Debug\net6.0\Serilog.Sinks.Console.dll
+E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer.Tests\bin\Debug\net6.0\Serilog.Sinks.File.dll

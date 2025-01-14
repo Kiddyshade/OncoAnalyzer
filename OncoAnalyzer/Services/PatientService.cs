@@ -2,7 +2,7 @@
 using System.Data.SqlClient;
 using System.Reflection.PortableExecutable;
 using OncoAnalyzer.Models;
-
+using Serilog;
 
 namespace OncoAnalyzer.Services
 {
@@ -22,49 +22,59 @@ namespace OncoAnalyzer.Services
 
         public void AddPatient()
         {
-            // 0.1 Updated in Patientservice.cs
-            string name;
-            do
+
+            try
             {
-                // 1. Accept patient details
-                Console.Write("Enter Patient Name: ");
-                name = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(name))
+                // 0.1 Updated in Patientservice.cs
+                string name;
+                do
                 {
-                    Console.WriteLine("Patient name cannot be empty. Please try again.");
-                }
-            } while (string.IsNullOrWhiteSpace(name));
+                    // 1. Accept patient details
+                    Console.Write("Enter Patient Name: ");
+                    name = Console.ReadLine();
+                    if (string.IsNullOrWhiteSpace(name))
+                    {
+                        Console.WriteLine("Patient name cannot be empty. Please try again.");
+                    }
+                } while (string.IsNullOrWhiteSpace(name));
 
-            int age;
+                int age;
 
-            do
+                do
+                {
+                    Console.WriteLine("Enter Age: ");
+
+                    var ageInput = Console.ReadLine();
+                    if (!int.TryParse(ageInput, out age) || age <= 0)
+                    {
+                        Console.WriteLine("Invalid age. Please enter a positive integer.");
+                    }
+
+                } while (age <= 0);
+
+                string diagnosis;
+
+                do
+                {
+                    Console.Write("Enter Diagnosis (required!) (e.g., Lung Cancer): ");
+                    diagnosis = Console.ReadLine();
+                    if (string.IsNullOrWhiteSpace(diagnosis))
+                    {
+                        Console.WriteLine("Diagnosis cannot be empty. Please try again.");
+                    }
+                } while (string.IsNullOrWhiteSpace(diagnosis));
+
+
+                // Call the overloaded method with the gathered input - for unit testing purpose
+                AddPatient(name, age, diagnosis);
+            }
+            catch (Exception ex)
             {
-                Console.WriteLine("Enter Age: ");
 
-                var ageInput = Console.ReadLine();
-                if (!int.TryParse(ageInput,out age) || age<=0)
-                {
-                    Console.WriteLine("Invalid age. Please enter a positive integer.");
-                }
+                Log.Error(ex, "Failed to add a new patient. ");
+                Console.WriteLine("ERROR: Could not add patient. Please try again. ");
+            }
 
-            } while (age<=0);
-
-            string diagnosis;
-
-            do
-            {
-                Console.Write("Enter Diagnosis (required!) (e.g., Lung Cancer): ");
-                diagnosis = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(diagnosis))
-                {
-                    Console.WriteLine("Diagnosis cannot be empty. Please try again.");
-                }
-            } while (string.IsNullOrWhiteSpace(diagnosis));
-
-
-            // Call the overloaded method with the gathered input - for unit testing purpose
-            AddPatient(name, age, diagnosis); 
-      
 
         }
 
@@ -89,30 +99,43 @@ namespace OncoAnalyzer.Services
         // View all patients
         public void ViewAllPatients()
         {
-            Console.WriteLine("\nList of All Patients: ");
 
-            // Define the SQL query to fetch all patients
-            string query = "SELECT * FROM Patients;";
-
-            // Use the IDbExecutor to execute the query
-            using (var reader = dbExecutor.ExecuteReader(query, null))
+            try
             {
-                // Check if there are rows
-                if (!reader.Read())  // If Read() returns false, there are no rows
+                Console.WriteLine("\nList of All Patients: ");
+
+                // Define the SQL query to fetch all patients
+                string query = "SELECT * FROM Patients;";
+
+                // Use the IDbExecutor to execute the query
+                using (var reader = dbExecutor.ExecuteReader(query, null))
                 {
-                    Console.WriteLine("No Patients found");
-                    return;
+                    // Check if there are rows
+                    if (!reader.Read())  // If Read() returns false, there are no rows
+                    {
+                        Console.WriteLine("No Patients found");
+                        return;
+                    }
+
+
+                    // Process the first row
+                    do
+                    {
+                        Console.WriteLine($"ID: {reader["Id"]}, Name: {reader["Name"]}," +
+                           $"Age: {reader["Age"]}, Diagnosis: {reader["Diagnosis"]}");
+                    } while (reader.Read());
+
+                    Log.Information("Displayed all patients successfully.");
                 }
-
-
-                // Process the first row
-                do
-                {
-                    Console.WriteLine($"ID: {reader["Id"]}, Name: {reader["Name"]}," +
-                       $"Age: {reader["Age"]}, Diagnosis: {reader["Diagnosis"]}");
-                } while (reader.Read());
-
             }
+            catch (Exception ex)
+            {
+
+                Log.Error(ex, "Failed to retrieve patient data.");
+                Console.WriteLine("ERROR: Could not retrieve patients.");
+            }
+
+            
         }
 
         public void SearchPatient()

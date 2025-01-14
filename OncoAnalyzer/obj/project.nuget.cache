@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "tZIIGdNmdLbXztwlwUf/tEBwOkSpFlex10YOrfq5GR8M2P/WDaW1c5eV6bW8iqpo16Jfd+jxWP19+sYsV9hNNw==",
+  "dgSpecHash": "ko/9FUdOTXTieXGFSI0RajDdzu9Yb1O6Kucm8UokB3O5Q3eLOPg/7NhwkAxEiduYMpvApobOs/JP0mR/S9iJ6Q==",
   "success": true,
   "projectFilePath": "E:\\Development\\Language\\C#\\OncoAnalyzer\\OncoAnalyzer\\OncoAnalyzer.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,9 @@
     "C:\\Users\\ADMIN\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\ADMIN\\.nuget\\packages\\serilog\\4.2.0\\serilog.4.2.0.nupkg.sha512",
+    "C:\\Users\\ADMIN\\.nuget\\packages\\serilog.sinks.console\\6.0.0\\serilog.sinks.console.6.0.0.nupkg.sha512",
+    "C:\\Users\\ADMIN\\.nuget\\packages\\serilog.sinks.file\\6.0.0\\serilog.sinks.file.6.0.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\system.data.sqlclient\\4.9.0\\system.data.sqlclient.4.9.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\system.diagnostics.eventlog\\6.0.0\\system.diagnostics.eventlog.6.0.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\xunit\\2.9.3\\xunit.2.9.3.nupkg.sha512",

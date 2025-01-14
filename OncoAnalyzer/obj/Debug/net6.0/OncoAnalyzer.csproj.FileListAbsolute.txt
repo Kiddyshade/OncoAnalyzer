@@ -29,3 +29,6 @@ E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\bin\Debug\net6.0\xunit.core
 E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\bin\Debug\net6.0\xunit.execution.dotnet.dll
 E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Diagnostics.EventLog.Messages.dll
 E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Diagnostics.EventLog.dll
+E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\bin\Debug\net6.0\Serilog.dll
+E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\bin\Debug\net6.0\Serilog.Sinks.Console.dll
+E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\bin\Debug\net6.0\Serilog.Sinks.File.dll
