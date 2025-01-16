@@ -138,56 +138,105 @@ namespace OncoAnalyzer.Services
             
         }
 
-        public void SearchPatient()
+        // Advanced search functionality - case insensitive to handle large dataset
+        public void SearchPatients()
         {
-            // 1. Ask user to search by ID or Name
-            Console.WriteLine("Search by: 1. ID 2. Name");
-            var option = Console.ReadLine();
-
-            if (option == "1") //Search by ID
+            try
             {
-                Console.WriteLine("Enter Patient ID: ");
-                if (int.TryParse(Console.ReadLine(), out int id))
+                Console.WriteLine("Search patients: ");
+                Console.WriteLine("Leave fields empty to skip filters.");
+
+                //Input for filters
+                Console.Write("Enter Patient Name (optional): ");
+                string name = Console.ReadLine()?.Trim();
+
+                Console.Write("Enter Minimum Age (optional): ");
+                string minAgeInput = Console.ReadLine();
+                int? minAge = int.TryParse(minAgeInput, out int min) ? min : null;
+
+                Console.Write("Enter Maximum Age (optional): ");
+                string maxAgeInput = Console.ReadLine();
+                int? maxAge = int.TryParse(maxAgeInput, out int max) ? max : null;
+
+                Console.Write("Enter Diagnosis (optional): ");
+                string diagnosis = Console.ReadLine()?.Trim();
+
+                // Construct the query
+                string query = "SELECT * FROM Patients WHERE 1=1";
+                var parameters = new List<SqlParameter>();
+
+                if (!string.IsNullOrWhiteSpace(name))
                 {
-                    var patient = patients.FirstOrDefault(p => p.Id == id);
-                    if(patient != null) 
+                    query += " AND LOWER(Name) LIKE LOWER(@Name)"; // case insensitive
+                    parameters.Add(new SqlParameter("@Name", $"%{name}%"));
+                }
+
+                if (minAge.HasValue)
+                {
+                    query += " AND Age >= @MinAge";
+                    parameters.Add(new SqlParameter("@MinAge", minAge.Value));
+                }
+
+                if (maxAge.HasValue)
+                {
+                    query += " AND age <= @MaxAge";
+                    parameters.Add(new SqlParameter("@MaxAge", maxAge.Value));
+                }
+
+                if (!string.IsNullOrWhiteSpace(diagnosis))
+                {
+                    query += " AND LOWER(Diagnosis) LIKE LOWER(@Diagnosis)"; // case insensitive
+                    parameters.Add(new SqlParameter("@Diagnosis", $"%{diagnosis}%"));
+                }
+
+                // Log the query and parameters for debugging
+                Log.Debug("Executing query: {Query}", query);
+
+                foreach (var param in parameters)
+                {
+                    Log.Debug("Parameter: {Name} = {Value}", param.ParameterName, param.Value);
+                }
+
+                // Execute the query
+
+                using (var reader = dbExecutor.ExecuteReader(query, command =>
                     {
-                        DisplayPatientDetails(patient);
+                    foreach (var param in parameters)
+                    {
+                        command.Parameters.Add(param);
+                        
                     }
-                    else { Console.WriteLine("No patient found with the given ID."); }
-                }
-                else { Console.WriteLine("Invalid ID input. Please try again."); }
-            }
-            else if (option == "2") 
-            {
-                Console.WriteLine("Enter Patient Name: ");
-                var name = Console.ReadLine();
-
-                var patient = patients.FirstOrDefault(p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-              
-                if(patient != null)
+                    }))
                 {
-                    DisplayPatientDetails(patient);
-                }
-                else
-                {
-                    Console.WriteLine("No patient found with the given name.");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Invalid option. Please choose 1 or 2.");
-            }
-        }
+                    // Check if there are any results
 
-        private void DisplayPatientDetails(Patient patient)
-        {
-            // 2. Display the patient's details
-            Console.WriteLine("\nPatient Details: ");
-            Console.WriteLine($"ID: {patient.Id}");
-            Console.WriteLine($"Name: {patient.Name}");
-            Console.WriteLine($"Age: {patient.Age}");
-            Console.WriteLine($"Diagnosis: {patient.Diagnosis}");
+                    if (!reader.Read())
+                    {
+                        Console.WriteLine("No patients found matching the given criteria.");
+                        return;
+                    }
+
+                    // Display the first result (since Read() advances the cursor)
+                    Console.WriteLine("\n Search Results: ");
+
+                    do
+                    {
+                        Console.WriteLine($"ID: {reader["Id"]}, Name: {reader["Name"]}, Age: {reader["Age"]}, Diagnosis: {reader["Diagnosis"]}");
+
+                    }
+                    while (reader.Read());
+                    
+
+                    Log.Information("Advanced search completed successfully with filters: Name={Name}, MinAge={MinAge}, MaxAge={MaxAge}, Diagnosis={Diagnosis}. ",
+                        name, minAge, maxAge, diagnosis);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Log.Error(ex, "Failed to execute advanced patient search. ");
+                Console.WriteLine("ERROR: Could not complete search. Please try again.");
+            }
         }
 
         
