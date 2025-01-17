@@ -239,7 +239,54 @@ namespace OncoAnalyzer.Services
             }
         }
 
-        
+        // Export to CSV file logic
+        public void ExportAllPatientstoCSV()
+        {
+            try
+            {
+                // Define the SQL query to fetch all patients
+                string query = "SELECT * FROM Patients";
+
+                // Execute the query and fetch data
+                var patients = new List<string>();
+                using (var reader = dbExecutor.ExecuteReader(query, null))
+                {
+
+                    // check if there are any patients
+                    if (!reader.Read())
+                    {
+                        Console.WriteLine("No patients to export");
+                        return;
+                    }
+
+                    // Write CSV header
+                    patients.Add("ID, Name, Age, Diagnosis");
+
+                    // Loop through the results and add to the list
+
+                    do
+                    {
+                        string row = $"{reader["Id"]},{reader["Name"]},{reader["Age"]},{reader["Diagnosis"]}";
+                        patients.Add(row);
+                    } while (reader.Read());
+                }
+
+                // define the file path for the CSV
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), "patients.csv");
+
+                // Write all lines to the CSV file
+                File.WriteAllLines(filePath, patients);
+
+                Console.WriteLine($"Patients exported successfully to {filePath}");
+                Log.Information("Exported all patients to CSV at {FilePath}", filePath);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Failed to export patients to CSV.");
+                Console.WriteLine("ERROR: Could not export patients. Please try again");
+                throw;
+            }
+        }
     }
 
    

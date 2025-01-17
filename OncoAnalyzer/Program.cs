@@ -11,7 +11,7 @@ namespace OncoAnalyzer
             // Configure Serilog
             Log.Logger = new LoggerConfiguration()
                              .WriteTo.Console()    // Logs to Console
-                             .WriteTo.File(Path.Combine(AppContext.BaseDirectory,"../../../../Logs/oncoanalyzer.log"),  // Logs in the Log folder in project folder 
+                             .WriteTo.File(Path.Combine(AppContext.BaseDirectory,"../../../Logs/oncoanalyzer.log"),  // Logs in the Log folder in project folder 
                              rollingInterval: RollingInterval.Day, // Logs to a file(daily rolling logs)
                              retainedFileCountLimit: 7)  // Retain logs for the Last 7 days
                              .CreateLogger(); // logs can be found in "E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\bin\Debug\net6.0\Logs"
@@ -38,7 +38,9 @@ namespace OncoAnalyzer
                     Console.WriteLine("1. Add Patient Details");
                     Console.WriteLine("2. Record Biomarker Test Results");
                     Console.WriteLine("3. View all Patients");
-                    Console.WriteLine("4. Exit");
+                    Console.WriteLine("4. Search Patients");  // Add this line for Advance patient search
+                    Console.WriteLine("5. Export all Patients to CSV");
+                    Console.WriteLine("6. Exit");
                     Console.WriteLine("Select an option: ");
 
                     var input = Console.ReadLine();
@@ -56,6 +58,13 @@ namespace OncoAnalyzer
                             patientService.ViewAllPatients(); // view all patient from database functionality
                             break;
                         case "4":
+                            patientService.SearchPatients(); // Calling advanced patient search
+                            break;
+                        case "5":
+                            patientService.ExportAllPatientstoCSV(); // Calling export to CSV functionality
+                            break;
+                        case "6":
+                            Log.Information("OncoAnalyzer applciation exiting...");
                             Console.WriteLine("Exiting application. Goodbye!");
                             break;
 
