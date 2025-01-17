@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Data.SqlClient;
-using System.Reflection.PortableExecutable;
 using OncoAnalyzer.Models;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
 using Serilog;
 
 namespace OncoAnalyzer.Services
@@ -287,6 +288,94 @@ namespace OncoAnalyzer.Services
                 throw;
             }
         }
+
+        //Export to PDF file logic
+
+        public void ExportAllPatientstoPDF()
+        {
+            try
+            {
+                // Define the SQL queryt to fetch all patients
+                string query = "SELECT * FROM Patients;";
+
+                // Fetch data from database
+                var patients = new List<(int Id, string Name, int Age, string Diagnosis)>();
+                using (var reader = dbExecutor.ExecuteReader(query, null))
+                {
+                    if (!reader.Read())
+                    {
+                        Console.WriteLine("No patients to export");
+                        return;
+                    }
+
+                    do
+                    {
+                        patients.Add((
+                            Convert.ToInt32(reader["Id"]),
+                            reader["Name"].ToString(),
+                            Convert.ToInt32(reader["Age"]),
+                            reader["Diagnosis"].ToString()
+                            ));
+
+                    } while (reader.Read());
+                }
+
+                // Create a new PDF document
+                PdfDocument document = new PdfDocument();
+                document.Info.Title = "Patient Data Report";
+
+                // Create a new page
+                PdfPage page = document.AddPage();
+                XGraphics gfx = XGraphics.FromPdfPage(page);
+
+                // Use the correct constructor for fonts in PDFSharp 6.1.1
+                XFont titleFont = new XFont("Arial", 20);
+                XFont contentFont = new XFont("Verdana", 12);
+
+                // Add the title
+
+                gfx.DrawString("Patient Data Report", titleFont, XBrushes.Black,
+                    new XRect(0,0,page.Width,50), XStringFormats.TopCenter);
+
+                // Add patient data
+                int yPosition = 60; // starting position for patient data
+                gfx.DrawString("ID      Name                       Age       Diagnosis", contentFont, XBrushes.Black, 20, yPosition);
+                gfx.DrawLine(XPens.Black, 20, yPosition + 5, page.Width - 20, yPosition + 5); //Add a horizontal line
+                yPosition += 20;
+
+                foreach (var patient in patients)
+                {
+                    string patientInfo = $"{patient.Id,-5} {patient.Name,-18} {patient.Age,-6} {patient.Diagnosis}";
+                    gfx.DrawString(patientInfo, contentFont, XBrushes.Black, 20, yPosition);
+                    yPosition += 20;
+
+                    // Add a new page if the content overflows the current page
+                    if (yPosition > page.Height - 50)
+                    {
+                        page = document.AddPage();
+                        gfx = XGraphics.FromPdfPage(page);
+                        yPosition = 20;
+                    }
+                }
+
+                // Define the file path for the PDF
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), "patient.pdf");
+
+                // Save the PDF document
+                document.Save(filePath);
+
+                Console.WriteLine($"Patients exported successfully to {filePath}");
+                Log.Information("Exported all patients to PDF at {FilePath}", filePath);
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Failed to export patients to PDF.");
+                Console.WriteLine("ERROR: Could not export patients. Please try again.");
+                
+            }
+        }
+
     }
 
    

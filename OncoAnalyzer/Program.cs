@@ -40,7 +40,8 @@ namespace OncoAnalyzer
                     Console.WriteLine("3. View all Patients");
                     Console.WriteLine("4. Search Patients");  // Add this line for Advance patient search
                     Console.WriteLine("5. Export all Patients to CSV");
-                    Console.WriteLine("6. Exit");
+                    Console.WriteLine("6. Export all Patients to PDF");
+                    Console.WriteLine("7. Exit");
                     Console.WriteLine("Select an option: ");
 
                     var input = Console.ReadLine();
@@ -64,6 +65,9 @@ namespace OncoAnalyzer
                             patientService.ExportAllPatientstoCSV(); // Calling export to CSV functionality
                             break;
                         case "6":
+                            patientService.ExportAllPatientstoPDF(); // Calling export to PDF functionality
+                            break;
+                        case "7":
                             Log.Information("OncoAnalyzer applciation exiting...");
                             Console.WriteLine("Exiting application. Goodbye!");
                             break;
