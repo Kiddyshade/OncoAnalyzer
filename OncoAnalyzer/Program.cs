@@ -1,4 +1,4 @@
-﻿using System;
+﻿using OncoAnalyzer.Models;
 using OncoAnalyzer.Services;// Importing Services Namespace
 using Serilog; // used to log message to both the console and a file
 
@@ -28,9 +28,32 @@ namespace OncoAnalyzer
                 var dbExecutor = new DbExecutor("Server=DESKTOP-GDT78B8\\SQLEXPRESS;Database=OncoAnalyzerDB;Trusted_Connection=True;");
 
                 //var databaseService = new DatabaseService();
-                var patientService = new PatientService(dbExecutor); // Initialize Service
-                var biomarkerService = new BiomarkerService(dbExecutor); // Initialize service
+                //var patientService = new PatientService(dbExecutor); // Initialize Service
+                //var biomarkerService = new BiomarkerService(dbExecutor); // Initialize service
+                var UserService = new UserService(dbExecutor);  // Initialize Service
 
+
+                // Authenticate the user
+                User currentUser = null;
+                while (currentUser  == null)
+                {
+                    Console.WriteLine("\n Please log in: ");
+                    Console.Write("Username: ");
+                    string username = Console.ReadLine();
+                    Console.Write("Password: ");
+                    string password = Console.ReadLine();
+
+                    currentUser = UserService.Authenticate(username, password);
+
+                    if (currentUser == null)
+                    {
+                        Console.WriteLine("Invalid Login credentials. Please try again."); // Current user null
+                    }
+                }
+
+                Console.WriteLine($"Welcome, {currentUser.Username}! You are logged in as {currentUser.Role}.");
+
+                // Main menu with role-based permissions
                 while (true)
                 {
                     // 2. Display Menu
@@ -50,22 +73,39 @@ namespace OncoAnalyzer
                     switch (input)
                     {
                         case "1":
+                            if (currentUser.Role != "Admin")
+                            {
+                                Console.WriteLine("Access denied. Only Admins can add patients.");
+                                break;
+                            }
+                            var patientService = new PatientService(dbExecutor);
                             patientService.AddPatient();
                             break;
                         case "2":
+
+                            if (currentUser.Role == "Staff")
+                            {
+                                Console.WriteLine("Access denied. Staff cannot record biomarker tests.");
+                                break;
+                            }
+                            var biomarkerService = new BiomarkerService(dbExecutor);
                             biomarkerService.RecordTest();
                             break;
                         case "3":
-                            patientService.ViewAllPatients(); // view all patient from database functionality
+                            var patientServiceView = new PatientService(dbExecutor);
+                            patientServiceView.ViewAllPatients(); // view all patient from database functionality
                             break;
                         case "4":
-                            patientService.SearchPatients(); // Calling advanced patient search
+                            var patientServiceSearch = new PatientService(dbExecutor);
+                            patientServiceSearch.SearchPatients(); // Calling advanced patient search
                             break;
                         case "5":
-                            patientService.ExportAllPatientstoCSV(); // Calling export to CSV functionality
+                            var patientServiceExportCSV = new PatientService(dbExecutor);
+                            patientServiceExportCSV.ExportAllPatientstoCSV(); // Calling export to CSV functionality
                             break;
                         case "6":
-                            patientService.ExportAllPatientstoPDF(); // Calling export to PDF functionality
+                            var patientServiceExportPDF = new PatientService(dbExecutor);
+                            patientServiceExportPDF.ExportAllPatientstoPDF(); // Calling export to PDF functionality
                             break;
                         case "7":
                             Log.Information("OncoAnalyzer applciation exiting...");

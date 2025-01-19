@@ -1,5 +1,4 @@
-﻿using System;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 using OncoAnalyzer.Models;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
