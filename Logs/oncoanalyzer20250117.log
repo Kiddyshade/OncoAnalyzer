@@ -1,0 +1,24 @@
+2025-01-17 01:39:02.296 +05:30 [INF] OncoAnalyzer application starting...
+2025-01-17 01:39:42.354 +05:30 [INF] OncoAnalyzer application starting...
+2025-01-17 01:42:38.341 +05:30 [INF] OncoAnalyzer application starting...
+2025-01-17 01:43:02.553 +05:30 [INF] Advanced search completed successfully with filters: Name=, MinAge=null, MaxAge=55, Diagnosis=. 
+2025-01-17 01:43:20.544 +05:30 [INF] Displayed all patients successfully.
+2025-01-17 01:43:40.057 +05:30 [INF] Advanced search completed successfully with filters: Name=, MinAge=null, MaxAge=null, Diagnosis=finger. 
+2025-01-17 01:44:23.707 +05:30 [INF] Advanced search completed successfully with filters: Name=, MinAge=null, MaxAge=null, Diagnosis=Finger. 
+2025-01-17 01:44:52.737 +05:30 [INF] Advanced search completed successfully with filters: Name=Vi, MinAge=null, MaxAge=null, Diagnosis=. 
+2025-01-17 01:45:13.211 +05:30 [INF] Displayed all patients successfully.
+2025-01-17 01:45:53.815 +05:30 [INF] Advanced search completed successfully with filters: Name=Vijay, MinAge=null, MaxAge=null, Diagnosis=. 
+2025-01-17 01:57:53.377 +05:30 [INF] OncoAnalyzer application starting...
+2025-01-17 01:58:01.979 +05:30 [INF] Advanced search completed successfully with filters: Name=Vi, MinAge=null, MaxAge=null, Diagnosis=. 
+2025-01-17 01:58:13.004 +05:30 [INF] Advanced search completed successfully with filters: Name=Vijay, MinAge=null, MaxAge=null, Diagnosis=. 
+2025-01-17 01:59:01.606 +05:30 [INF] Advanced search completed successfully with filters: Name=, MinAge=null, MaxAge=null, Diagnosis=finger. 
+2025-01-17 01:59:12.228 +05:30 [INF] Displayed all patients successfully.
+2025-01-17 02:07:31.945 +05:30 [INF] OncoAnalyzer application starting...
+2025-01-17 02:07:39.693 +05:30 [INF] Displayed all patients successfully.
+2025-01-17 02:07:51.974 +05:30 [INF] Advanced search completed successfully with filters: Name=Vi, MinAge=null, MaxAge=null, Diagnosis=. 
+2025-01-17 02:08:12.701 +05:30 [INF] Advanced search completed successfully with filters: Name=, MinAge=null, MaxAge=null, Diagnosis=finger. 
+2025-01-17 02:18:10.214 +05:30 [INF] OncoAnalyzer application starting...
+2025-01-17 02:18:13.627 +05:30 [INF] Displayed all patients successfully.
+2025-01-17 02:18:24.086 +05:30 [INF] Advanced search completed successfully with filters: Name=Vi, MinAge=null, MaxAge=null, Diagnosis=. 
+2025-01-17 02:18:52.414 +05:30 [INF] Advanced search completed successfully with filters: Name=Vijay, MinAge=null, MaxAge=null, Diagnosis=. 
+2025-01-17 02:19:04.628 +05:30 [INF] Advanced search completed successfully with filters: Name=, MinAge=null, MaxAge=null, Diagnosis=finger. 

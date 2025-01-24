@@ -135,9 +135,17 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[33.0.1, )"
+            },
             "Moq": {
               "target": "Package",
               "version": "[4.20.72, )"
+            },
+            "PDFsharp": {
+              "target": "Package",
+              "version": "[6.1.1, )"
             },
             "Serilog": {
               "target": "Package",

@@ -1,0 +1,8 @@
+2025-01-17 23:48:26.092 +05:30 [INF] OncoAnalyzer application starting...
+2025-01-17 23:49:09.906 +05:30 [INF] Displayed all patients successfully.
+2025-01-17 23:49:24.168 +05:30 [INF] Advanced search completed successfully with filters: Name=Mayil, MinAge=null, MaxAge=null, Diagnosis=. 
+2025-01-17 23:49:40.556 +05:30 [INF] Biomarker test 'GBA' recorded for Patient ID 2 withvalue 61.
+2025-01-17 23:49:45.591 +05:30 [INF] Displayed all patients successfully.
+2025-01-17 23:49:50.022 +05:30 [INF] Exported all patients to CSV at E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\bin\Debug\net6.0\patients.csv
+2025-01-17 23:51:25.886 +05:30 [INF] Exported all patients to CSV at E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\bin\Debug\net6.0\patients.csv
+2025-01-17 23:51:39.340 +05:30 [INF] OncoAnalyzer applciation exiting...

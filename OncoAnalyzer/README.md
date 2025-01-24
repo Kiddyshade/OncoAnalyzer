@@ -150,3 +150,122 @@ OncoAnalyzer is a C# console application designed to track patient data and biom
 3. Clone this repository:
    ```bash
    git clone https://github.com/Kiddyshade/OncoAnalyzer.git
+
+--------------------------------------------------------------------------------------------------
+# 19-01-25 - Update (OncoAnalyzer is a console-based application designed to help track patient data
+in an oncology laboratory. It provides basic patient data management functionalities and now includes
+user authentication with role-based access control, as well as advanced features like exporting data 
+to CSV/PDF.)
+--------------------------------------------------------------------------------------------------
+
+# OncoAnalyzer - Oncology Data Tracker
+
+OncoAnalyzer is a console-based application designed to help track patient data in an oncology laboratory. It provides basic patient data management functionalities and now includes user authentication with role-based access control, as well as advanced features like exporting data to CSV/PDF.
+
+## Features
+
+### Core Features:
+- **Add Patient Details**: Add basic patient information (name, age, and diagnosis) into the system.
+- **View All Patients**: List all the patients stored in the database.
+- **Advanced Search**: Search patients using multiple criteria like name, age range, and diagnosis, with case-insensitive matching.
+- **Record Biomarker Test Results**: Record test results for patients with details such as biomarker name, value, and date.
+- **Export to CSV and PDF**:
+  - Export all patient data to a CSV file.
+  - Export patient data as a structured PDF file.
+
+### New Features:
+- **User Authentication and Role-Based Access Control**:
+  - **Login System**: Users must log in using a username and password to access the application.
+  - **Roles**: Each user has a specific role:
+    - `Admin`: Full access (add, edit, delete, and view patient data).
+    - `Doctor`: Can only view and search patient data.
+    - `Staff`: Can only export patient data (CSV or PDF).
+  - Passwords are securely hashed using SHA-256 with UTF-16 encoding.
+  - Authentication errors are logged using **Serilog**.
+
+### Persistent Logging:
+- All application events (e.g., successful database operations, errors, login attempts) are logged to a file using **Serilog** for easy debugging and monitoring.
+
+## Installation
+
+### Prerequisites:
+1. **.NET 6.0 SDK**: Ensure you have .NET 6.0 installed. Download it from [Microsoft .NET](https://dotnet.microsoft.com/).
+2. **SQL Server**: The application uses Microsoft SQL Server for persistent storage.
+3. **NuGet Packages**:
+   - **Serilog**: For logging.
+   - **PDFSharp**: For exporting patient data to PDF.
+   - **Dapper**: For database interactions (via `IDbExecutor`).
+
+### Clone the Repository:
+```bash
+git clone https://github.com/Kiddyshade/OncoAnalyzer.git
+cd OncoAnalyzer
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# 24/01/25 Update
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# OncoAnalyzer - Oncology Data Tracker
+
+OncoAnalyzer is a console-based application designed to track oncology-related patient data, biomarker test results, and other critical information. It allows users to manage data securely, export reports, and perform advanced queries.
+
+---
+
+## **Features**
+
+### 1. **User Authentication and Role-Based Access Control**
+- Users must log in with valid credentials before accessing the system.
+- Roles:
+  - **Admin**: Full access to add, import, export, and manage data.
+  - **Doctor**: Can view and search patient data.
+  - **Staff**: Can export data to CSV or PDF.
+
+---
+
+### 2. **Patient Management**
+- Add new patient details.
+- View all registered patients.
+- Perform advanced patient searches with filters like name, age range, and diagnosis.
+
+---
+
+### 3. **Biomarker Test Management**
+- Record biomarker test results for patients.
+
+---
+
+### 4. **Data Export**
+- **Export to CSV**: Save all patient data to a CSV file.
+- **Export to PDF**: Generate a PDF report of patient data.
+
+---
+
+### 5. **Data Import from CSV**
+- **Admin-only feature**: Import patient data from a properly formatted CSV file.
+- **CSV Format**:
+  - Must include the headers: `Name`, `Age`, `Diagnosis`.
+  - Example:
+    ```csv
+    Name,Age,Diagnosis
+    John Doe,45,Lung Cancer
+    Jane Smith,34,Breast Cancer
+    ```
+- The system validates the CSV structure and data before importing.
+- Skips invalid rows and logs errors.
+
+---
+
+## **Getting Started**
+
+### **Prerequisites**
+1. Install [.NET 6.0 SDK](https://dotnet.microsoft.com/download/dotnet/6.0).
+2. Ensure you have access to an instance of Microsoft SQL Server.
+
+---
+
+### **Setup Instructions**
+
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/Kiddyshade/OncoAnalyzer.git
+   cd OncoAnalyzer

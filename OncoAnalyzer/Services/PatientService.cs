@@ -1,8 +1,10 @@
-﻿using System.Data.SqlClient;
+﻿using System.Globalization;  // For CSV parsing Culture
+using System.Data.SqlClient;
 using OncoAnalyzer.Models;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using Serilog;
+using CsvHelper;
 
 namespace OncoAnalyzer.Services
 {
@@ -371,6 +373,77 @@ namespace OncoAnalyzer.Services
             {
                 Log.Error(ex, "Failed to export patients to PDF.");
                 Console.WriteLine("ERROR: Could not export patients. Please try again.");
+                
+            }
+        }
+
+        public void ImportFromCsv()
+        {
+            try
+            {
+                Console.WriteLine("\n Enter the full path of the CSV file to Import");
+                string filePath = Console.ReadLine();
+
+                if (!File.Exists(filePath))
+                {
+                    Console.WriteLine("File does not exist. Please provide a valid path.");
+                    return;
+                }
+
+                //Read and parse the CSV header
+                var patients = new List<Patient>();
+                using (var reader = new StreamReader(filePath))
+                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                {
+                    // validate the CSV header
+                    if (csv.Context.Reader.HeaderRecord == null)
+                    {
+                        csv.Read();  // Read the first Row
+                        csv.ReadHeader(); // Read the header rows
+                    }
+
+
+                    var csvHeader = csv.Context.Reader.HeaderRecord;
+
+                    if(csvHeader == null || !csvHeader.Contains("Name") || !csvHeader.Contains("Age") || !csvHeader.Contains("Diagnosis"))
+                    {
+                        Console.WriteLine("Invalid CSV Format. Ensure the file contains the header: Name, Age, Diagnosis.");
+                        return;
+                    }
+
+                    // Configure CSV mapping (if needed)
+                    csv.Context.RegisterClassMap<PatientCsvMap>();
+
+                    // Read the records
+                    patients = csv.GetRecords<Patient>().ToList();
+                }
+
+                // Validate and insert each record
+                foreach (var patient in patients)
+                {
+                    if (string.IsNullOrWhiteSpace(patient.Name) || patient.Age <=0 || string.IsNullOrWhiteSpace(patient.Diagnosis))
+                    {
+                        Console.WriteLine($"Skipping invalid record: {patient}");
+                        continue;
+                    }
+
+                    // Insert into the database
+                    string query = @"INSERT INTO Patients (Name, Age, Diagnosis) VALUES (@Name, @Age, @Diagnosis);";
+                    dbExecutor.ExecuteNonQuery( query, command =>
+                    {
+                        command.Parameters.Add(new SqlParameter("@Name", patient.Name));
+                        command.Parameters.Add(new SqlParameter("@Age", patient.Age));
+                        command.Parameters.Add(new SqlParameter("@Diagnosis", patient.Diagnosis));
+                    });
+                    Console.WriteLine($"Imported patient: {patient.Name}, {patient.Age}, {patient.Diagnosis}");
+                }
+
+                Log.Information("CSV Imported completed successfully");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error during CSV import.");
+                Console.WriteLine("An Error occured during CSV import. Please check the logs for details.");
                 
             }
         }

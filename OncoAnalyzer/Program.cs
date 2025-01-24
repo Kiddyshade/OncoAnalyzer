@@ -28,8 +28,8 @@ namespace OncoAnalyzer
                 var dbExecutor = new DbExecutor("Server=DESKTOP-GDT78B8\\SQLEXPRESS;Database=OncoAnalyzerDB;Trusted_Connection=True;");
 
                 //var databaseService = new DatabaseService();
-                //var patientService = new PatientService(dbExecutor); // Initialize Service
-                //var biomarkerService = new BiomarkerService(dbExecutor); // Initialize service
+                var patientService = new PatientService(dbExecutor); // Initialize Service
+                var biomarkerService = new BiomarkerService(dbExecutor); // Initialize service
                 var UserService = new UserService(dbExecutor);  // Initialize Service
 
 
@@ -64,8 +64,16 @@ namespace OncoAnalyzer
                     Console.WriteLine("4. Search Patients");  // Add this line for Advance patient search
                     Console.WriteLine("5. Export all Patients to CSV");
                     Console.WriteLine("6. Export all Patients to PDF");
-                    Console.WriteLine("7. Exit");
+
+                    //Add Import from CSV as an Admin-only Feature
+                    if (currentUser.Role == "Admin")
+                    {
+                        Console.WriteLine("7. Import Patients from CSV");
+                    }
+                    Console.WriteLine("8. Exit");
                     Console.WriteLine("Select an option: ");
+
+
 
                     var input = Console.ReadLine();
 
@@ -78,7 +86,7 @@ namespace OncoAnalyzer
                                 Console.WriteLine("Access denied. Only Admins can add patients.");
                                 break;
                             }
-                            var patientService = new PatientService(dbExecutor);
+                            //var patientService = new PatientService(dbExecutor);
                             patientService.AddPatient();
                             break;
                         case "2":
@@ -88,7 +96,7 @@ namespace OncoAnalyzer
                                 Console.WriteLine("Access denied. Staff cannot record biomarker tests.");
                                 break;
                             }
-                            var biomarkerService = new BiomarkerService(dbExecutor);
+                            //var biomarkerService = new BiomarkerService(dbExecutor);
                             biomarkerService.RecordTest();
                             break;
                         case "3":
@@ -108,6 +116,19 @@ namespace OncoAnalyzer
                             patientServiceExportPDF.ExportAllPatientstoPDF(); // Calling export to PDF functionality
                             break;
                         case "7":
+
+                            if (currentUser.Role == "Admin")
+                            {
+
+                                patientService.ImportFromCsv();
+                            }
+                            else
+                            {
+                                Console.WriteLine("You do not have permission to access this feature.");
+                            }
+                            break;
+
+                        case "8":
                             Log.Information("OncoAnalyzer applciation exiting...");
                             Console.WriteLine("Exiting application. Goodbye!");
                             break;
