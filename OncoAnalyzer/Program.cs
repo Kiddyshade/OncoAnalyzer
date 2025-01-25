@@ -58,19 +58,29 @@ namespace OncoAnalyzer
                 {
                     // 2. Display Menu
                     Console.WriteLine("\nMain Menu");
-                    Console.WriteLine("1. Add Patient Details");
-                    Console.WriteLine("2. Record Biomarker Test Results");
+
+                    //Add as an Admin-only Feature
+
+                    if (currentUser.Role == "Admin")
+                    {
+                        Console.WriteLine("1. Add Patient Details");
+                        Console.WriteLine("7. Import Patients from CSV");
+                    }
+
+                    // options for Admins and Doctors
+                    if (currentUser.Role == "Admin" || currentUser.Role == "Doctor")
+                    {
+                        Console.WriteLine("2. Record Biomarker Test Results");
+                        Console.WriteLine("8. Add Treatment for a patient");
+                    }
+
+                    // Common option for all roles
                     Console.WriteLine("3. View all Patients");
                     Console.WriteLine("4. Search Patients");  // Add this line for Advance patient search
                     Console.WriteLine("5. Export all Patients to CSV");
                     Console.WriteLine("6. Export all Patients to PDF");
-
-                    //Add Import from CSV as an Admin-only Feature
-                    if (currentUser.Role == "Admin")
-                    {
-                        Console.WriteLine("7. Import Patients from CSV");
-                    }
-                    Console.WriteLine("8. Exit");
+                    Console.WriteLine("9. View Treatments for a Patient"); // Option to view treatments for all users
+                    Console.WriteLine("10. Exit"); // Exit option
                     Console.WriteLine("Select an option: ");
 
 
@@ -89,6 +99,7 @@ namespace OncoAnalyzer
                             //var patientService = new PatientService(dbExecutor);
                             patientService.AddPatient();
                             break;
+
                         case "2":
 
                             if (currentUser.Role == "Staff")
@@ -96,25 +107,33 @@ namespace OncoAnalyzer
                                 Console.WriteLine("Access denied. Staff cannot record biomarker tests.");
                                 break;
                             }
-                            //var biomarkerService = new BiomarkerService(dbExecutor);
                             biomarkerService.RecordTest();
                             break;
+
                         case "3":
                             var patientServiceView = new PatientService(dbExecutor);
                             patientServiceView.ViewAllPatients(); // view all patient from database functionality
                             break;
+
+
                         case "4":
                             var patientServiceSearch = new PatientService(dbExecutor);
                             patientServiceSearch.SearchPatients(); // Calling advanced patient search
                             break;
+
+
                         case "5":
                             var patientServiceExportCSV = new PatientService(dbExecutor);
                             patientServiceExportCSV.ExportAllPatientstoCSV(); // Calling export to CSV functionality
                             break;
+
+
                         case "6":
                             var patientServiceExportPDF = new PatientService(dbExecutor);
                             patientServiceExportPDF.ExportAllPatientstoPDF(); // Calling export to PDF functionality
                             break;
+
+
                         case "7":
 
                             if (currentUser.Role == "Admin")
@@ -128,10 +147,37 @@ namespace OncoAnalyzer
                             }
                             break;
 
+
                         case "8":
+                            if (currentUser.Role != "Admin" && currentUser.Role != "Doctor")
+                            {
+                                Console.WriteLine("Access denied. Only Admins and Doctors can add treatments. ");
+                                break;
+                            }
+
+                            var treatmentServiceAdd = new TreatmentService(dbExecutor);
+                            treatmentServiceAdd.AddTreatment();
+                            break;
+
+
+                        case "9":
+                            
+                            Console.Write("Enter Patient ID to view treatments: ");
+                            if (int.TryParse(Console.ReadLine(), out int patientId))
+                            {
+                                var treatmentServiceView = new TreatmentService(dbExecutor);
+                                treatmentServiceView.ViewTreatments(patientId);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid Patient ID. ");
+                            }
+                            break;
+
+                        case "10":
                             Log.Information("OncoAnalyzer applciation exiting...");
                             Console.WriteLine("Exiting application. Goodbye!");
-                            break;
+                            return;
 
                         default:
                             Console.WriteLine("Invalid option. Please try again.");

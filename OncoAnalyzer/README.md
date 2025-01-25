@@ -269,3 +269,56 @@ OncoAnalyzer is a console-based application designed to track oncology-related p
    ```bash
    git clone https://github.com/Kiddyshade/OncoAnalyzer.git
    cd OncoAnalyzer
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# 25/01/25 Update
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+## New Features: Treatment Tracking
+
+### **1. Add Treatment**
+- **Access**: Admins and Doctors.
+- **Description**: Allows recording of treatment details for a specific patient.
+- **Usage**:
+  - Select **Option 8** from the main menu.
+  - Provide the patient ID, treatment type, start date, optional end date, and optional response.
+
+### **2. View Treatments**
+- **Access**: All roles.
+- **Description**: Displays all treatments associated with a given patient ID.
+- **Usage**:
+  - Select **Option 9** from the main menu.
+  - Enter the patient ID to view associated treatments.
+
+### **Role-Based Access Control**
+| Role    | Options Available                                   |
+|---------|-----------------------------------------------------|
+| Admin   | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10                      |
+| Doctor  | 2, 3, 4, 5, 6, 8, 9, 10                            |
+| Staff   | 3, 4, 5, 6, 9, 10                                  |
+
+---
+
+## Testing the New Features
+
+### **Scenarios**
+1. **Admin User**:
+   - Add a treatment for a patient and verify the database.
+   - Import patients from a CSV file.
+2. **Doctor User**:
+   - Add treatments and view them.
+   - Confirm restricted access to patient import.
+3. **Staff User**:
+   - View treatments and export data.
+   - Confirm restricted access to adding/editing data.
+
+---
+
+## Example Commands and Outputs
+
+### **Add Treatment**
+Enter Patient ID: 1 Enter Treatment Type (e.g., Chemotherapy): Chemotherapy Enter Start Date (YYYY-MM-DD): 2025-01-01 Enter End Date (YYYY-MM-DD, optional): 2025-01-15 Enter Response (optional): Partial Response Treatment added successfully.
+
+
+### **View Treatments**
+Enter Patient ID: 1 Treatments for Patient ID 1: ID: 1, Type: Chemotherapy, Start Date: 2025-01-01, End Date: 2025-01-15, Response: Partial Response
+
