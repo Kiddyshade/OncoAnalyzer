@@ -285,6 +285,19 @@
           }
         }
       },
+      "Spectre.Console/0.49.1": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Spectre.Console.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Spectre.Console.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "System.Data.SqlClient/4.9.0": {
         "type": "package",
         "dependencies": {
@@ -885,6 +898,26 @@
         "serilog.sinks.file.nuspec"
       ]
     },
+    "Spectre.Console/0.49.1": {
+      "sha512": "USV+pdu49OJ3nCjxNuw1K9Zw/c1HCBbwbjXZp0EOn6wM99tFdAtN34KEBZUMyRuJuXlUMDqhd8Yq9obW2MslYA==",
+      "type": "package",
+      "path": "spectre.console/0.49.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net6.0/Spectre.Console.dll",
+        "lib/net6.0/Spectre.Console.xml",
+        "lib/net7.0/Spectre.Console.dll",
+        "lib/net7.0/Spectre.Console.xml",
+        "lib/net8.0/Spectre.Console.dll",
+        "lib/net8.0/Spectre.Console.xml",
+        "lib/netstandard2.0/Spectre.Console.dll",
+        "lib/netstandard2.0/Spectre.Console.xml",
+        "small-logo.png",
+        "spectre.console.0.49.1.nupkg.sha512",
+        "spectre.console.nuspec"
+      ]
+    },
     "System.Data.SqlClient/4.9.0": {
       "sha512": "j4KJO+vC62NyUtNHz854njEqXbT8OmAa5jb1nrGfYWBOcggyYUQE0w/snXeaCjdvkSKWuUD+hfvlbN8pTrJTXg==",
       "type": "package",
@@ -1127,6 +1160,7 @@
       "Serilog >= 4.2.0",
       "Serilog.Sinks.Console >= 6.0.0",
       "Serilog.Sinks.File >= 6.0.0",
+      "Spectre.Console >= 0.49.1",
       "System.Data.SqlClient >= 4.9.0",
       "xunit >= 2.9.3"
     ]
@@ -1199,6 +1233,10 @@
           "Serilog.Sinks.File": {
             "target": "Package",
             "version": "[6.0.0, )"
+          },
+          "Spectre.Console": {
+            "target": "Package",
+            "version": "[0.49.1, )"
           },
           "System.Data.SqlClient": {
             "target": "Package",

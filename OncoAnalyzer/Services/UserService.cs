@@ -13,7 +13,7 @@ namespace OncoAnalyzer.Services
         }
 
         // Authenticate user by username and password
-        public User Authenticate(string username,string password)
+        public virtual User Authenticate(string username,string password)
         {
             try
             {

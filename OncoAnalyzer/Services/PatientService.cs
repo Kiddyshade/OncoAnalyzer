@@ -84,6 +84,24 @@ namespace OncoAnalyzer.Services
         public void AddPatient(string name, int age, string diagnosis)
         {
 
+            // Input validation: Ensure valid values before database operation
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException(" Patient name cannot be empty ");
+            }
+
+            if (age <= 0)
+            {
+                throw new ArgumentException("Patient age must be a positive integer");
+            }
+
+            if (string.IsNullOrWhiteSpace(diagnosis))
+            {
+                throw new ArgumentException("Diagnosis cannot be empty.");
+            }
+
+
+            // SQL Query to insert patient into the database.
             string insertPatient = @"INSERT INTO Patients (Name, Age, Diagnosis) 
                                                 VALUES (@Name, @Age, @Diagnosis);";
 

@@ -47,3 +47,4 @@ E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\bin\Debug\net6.0\PdfSharp.d
 E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\bin\Debug\net6.0\de\PdfSharp.Charting.resources.dll
 E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\bin\Debug\net6.0\de\PdfSharp.resources.dll
 E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\bin\Debug\net6.0\CsvHelper.dll
+E:\Development\Language\C#\OncoAnalyzer\OncoAnalyzer\bin\Debug\net6.0\Spectre.Console.dll
