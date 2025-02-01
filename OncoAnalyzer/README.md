@@ -322,3 +322,161 @@ Enter Patient ID: 1 Enter Treatment Type (e.g., Chemotherapy): Chemotherapy Ente
 ### **View Treatments**
 Enter Patient ID: 1 Treatments for Patient ID 1: ID: 1, Type: Chemotherapy, Start Date: 2025-01-01, End Date: 2025-01-15, Response: Partial Response
 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Update on 01/02/2025
+
+OncoAnalyzer - Oncology Data Tracker
+
+OncoAnalyzer is a C# console application designed to track patient data, biomarker test results, and treatments in an oncology-focused environment. It features role-based authentication, data export (CSV & PDF), and Microsoft SQL Server integration for persistent storage.
+Features
+1. User Authentication & Role-Based Access Control
+
+    Admin: Full access (add, edit, delete, and manage patient data).
+    Doctor: Can record biomarker test results and manage treatments.
+    Staff: Can only view and export data (CSV/PDF).
+    Passwords are securely hashed to enhance security.
+
+2. Patient Management
+
+    Add new patients to the system.
+    View all registered patients.
+    Perform advanced search by:
+        Name
+        Age range
+        Diagnosis (case-insensitive)
+
+3. Biomarker Test Tracking
+
+    Record biomarker test results (e.g., PSA levels).
+    Associate biomarker data with the correct patient.
+
+4. Treatment Management
+
+    Admins and doctors can add treatments for a patient.
+    View all treatments associated with a specific patient.
+
+5. Data Export & Import
+
+Export:
+
+    Save all patient data to CSV (Excel-compatible).
+    Generate PDF reports with structured formatting.
+    Import:
+    Admin-only feature: Import patient data from CSV with validation.
+
+6. Persistent Logging System
+
+    Uses Serilog for structured logging and error tracking.
+    Logs events like user login attempts, database errors, and CSV imports.
+
+Technologies Used
+
+    C# (.NET 6.0)
+    Microsoft SQL Server (Database)
+    Spectre.Console (Enhanced CLI)
+    Serilog (Logging)
+    CsvHelper (CSV Import/Export)
+    PDFSharp (PDF Generation)
+    xUnit & Moq (Unit Testing)
+
+How to Run the Project
+Prerequisites
+
+    Install .NET 6.0 SDK: Download Here
+    Install Microsoft SQL Server and SQL Server Management Studio (SSMS)
+    Clone the repository:
+
+    git clone https://github.com/<your-github-username>/OncoAnalyzer.git
+    cd OncoAnalyzer
+
+Database Setup
+
+    Open SSMS and create the database:
+
+CREATE DATABASE OncoAnalyzerDB;
+USE OncoAnalyzerDB;
+
+Create the Patients table:
+
+CREATE TABLE Patients (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Name NVARCHAR(100) NOT NULL,
+    Age INT NOT NULL,
+    Diagnosis NVARCHAR(200) NOT NULL
+);
+
+Create the Users table for authentication:
+
+    CREATE TABLE Users (
+        Id INT IDENTITY(1,1) PRIMARY KEY,
+        Username NVARCHAR(50) UNIQUE NOT NULL,
+        PasswordHash VARBINARY(64) NOT NULL,
+        Role NVARCHAR(20) NOT NULL
+    );
+
+Running the Application
+
+    Open Visual Studio and load the project.
+    Open the Package Manager Console and install dependencies:
+
+dotnet restore
+
+Run the application:
+
+    dotnet run
+
+Usage Guide
+User Login
+
+    Start the application.
+    Enter username and password.
+    The system grants access based on role-based authentication.
+
+Main Menu (Admin)
+
+1. Add Patient Details
+2. Record Biomarker Test Results
+3. View all Patients
+4. Search Patients
+5. Export Patients to CSV
+6. Export Patients to PDF
+7. Import Patients from CSV
+8. Add Treatment for a Patient
+9. View Treatments for a Patient
+10. Exit
+
+The menu dynamically adjusts based on user role.
+Running Unit Tests
+
+OncoAnalyzer includes unit tests using xUnit and Moq.
+
+    Open a terminal in the project root.
+    Run the tests using:
+
+    dotnet test
+
+    Test coverage:
+        Authentication Tests
+        Patient Service Tests
+        Role-Based Menu Access Tests
+        Database Mock Tests
+
+Contributing
+Steps to Contribute
+
+    Fork the repository.
+    Create a branch (feature/new-feature).
+    Commit your changes:
+
+git commit -m "Added new feature: XYZ"
+
+Push the branch:
+
+    git push origin feature/new-feature
+
+    Create a Pull Request.
+
+License
+
+This project is licensed under the MIT License.
